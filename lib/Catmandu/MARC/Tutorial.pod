@@ -404,7 +404,7 @@ use this Fix:
 
 When the fields need to be places back into the record the C<marc_paste> command can be used:
 
-   marc_paste(subjects)
+   marc_paste(tmp)
 
 This will add all 650 fields in the C<tmp> temporary variable at the B<end> of the record. You can
 change the MARC fields in place using the C<march_each> binder:
@@ -450,7 +450,7 @@ language. Using the C<rename> function we search for all the subfields, and repl
 the field matching the regular expression C<1> with C<0>. At the end, we paste
 back the C<tmp> field into the record.
 
-=head2 Setting and remove MARC indicators
+=head2 Setting and removing MARC indicators
 
 In the example below we set every indicator1 of the 500 field to the value "0".
 We will use the L<Catmandu::Fix::Bind::marc_each> bind with a loop variable:
@@ -467,12 +467,12 @@ We will use the L<Catmandu::Fix::Bind::marc_each> bind with a loop variable:
        end
      end
 
-Using the same method indicators can also be deleted by setting their value to
+Using the same method, indicators can also be deleted by setting their value to
 a space " ".
 
 =head2 Adding a new MARC subfield
 
-In the example below we append a new MARC subfield $z to the 500 field with value test.
+In the example below we append a new MARC subfield $z to the 500 field with value "test".
 We will use the L<Catmandu::Fix::Bind::marc_each> bind with a loop variable:
 
     # For each marc field...
@@ -536,7 +536,7 @@ Create a CSV file with name,value pairs (need two columns):
 
     $ catmandu convert MARC to MARC --fix myfixes.txt < data.mrc > output.mrc
 
-    with myfixes.txt like:
+    with myfixes.txt like this:
 
     do marc_each()
        marc_map(900a,test)
@@ -545,8 +545,8 @@ Create a CSV file with name,value pairs (need two columns):
        remove_field(test)
     end
 
-We use a "do marc_each() ... end" loop because 900a fields can be repeated. If a
-MARC tag isn't repeatable this loop not isn't needed. With marc_map we copy
+We use a "do marc_each() ... end" loop because 900a fields can be repeated. (If a
+MARC tag isn't repeatable this loop isn't needed.) With marc_map we copy
 first the value of a marc subfield to a 'test' field. This test we lookup against
 the CSV file. Then, we select only the records that are found in the CSV file
 (and return the correct value).
@@ -598,5 +598,5 @@ this Fix like:
 
     $ catmandu convert YAML to TSV --fix cleanup.fix < output.yml > result.csv
 
-This will provide a tab delimited file of double isbn numbers in the MARC
+This will provide a tab delimited file of duplicate isbn numbers in the MARC
 input file.
